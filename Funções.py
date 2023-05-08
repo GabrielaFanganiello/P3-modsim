@@ -11,39 +11,45 @@ import numpy as np
 
 # Simplificações feitas / abstração
 
-# Condições iniciais e fórmulas
+# Condições iniciais, variáveis globais e fórmulas
 
-g = 9.8                 # Aceleração da gravidade [m/s2]
+g = 9.8                             # Aceleração da gravidade [m/s2]
 
-r =                     # Raio da esfera [m]
+m =                                 # Massa da esfera [kg]
 
-k =                     # Constante elástica da mola [N/m]
+r =                                 # Raio da esfera [m]
 
-rho =                   # Densidade do ar [kg/m3]
+k =                                 # Constante elástica da mola [N/m]
 
-A = pi*(r**2)           # Área [m2]
+rho =                               # Densidade do ar [kg/m3]
 
-Cd =                    # Coeficiente de arrasto []
+A = pi*(r**2)                       # Área [m2]
 
-D = 1/2(rho * Cd * A * v**2)
+Cd =                                # Coeficiente de arrasto []
 
-tempo = np.arange()
+D = 1/2(rho * Cd * A * v**2)        # Fórmula do arrasto
+
+tempo = np.arange()                 # Lista de tempo
 
 
 # Implementando função do modelo
 
 def modelo(c0, tempo):
 
-    dxdt = 
-    dydt = 
+    x = c0[0]
+    y = c0[1]
+    vx = c0[2]
+    vy = c0[3]
 
-    dvxdt =
+    dxdt = vx
+    dydt = vy
+
+    dvxdt = 1/m()
     dvydt = 
 
     dXdt = [dxdt, dydt, dvxdt, dvydt]
 
     return dXdt
-
 
 # Resolvendo as equações diferenciais por ODEINT
 
