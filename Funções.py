@@ -3,7 +3,8 @@
 
 # Importando bibliotecas necessárias
 
-from math import pi
+from math import *
+
 import numpy as np
 
 # Dados experimentais
