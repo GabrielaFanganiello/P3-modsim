@@ -30,6 +30,12 @@ Cd =                                # Coeficiente de arrasto []
 
 D = 1/2(rho * Cd * A * v**2)        # Fórmula do arrasto
 
+#posicoes iniciais
+y0b =                          
+y0m =
+v0m = 0
+v0b = 0
+
 tempo = np.arange()                 # Lista de tempo
 
 
@@ -57,9 +63,27 @@ def modelo(c0, tempo):
 
     return dc0dt
 
+
+    
+Y0 = [y0b,y0m,v0m,v0b]
+
 # Resolvendo as equações diferenciais por ODEINT
+resultado = odeint(modelo,Y0,lista_t)
+lista_yb = resultado[:,0]
+lista_ym = resultado[:,1]
+lista_vb = resultado[:,2]
+lista_vm = resultado[:,3]
 
 #Plotando os gráficos
+plt.plot(lista_t,lista_yb, label)
+plt.plot(lista_t,lista_ym, label)
+plt.xlabel("Tempo em segundos")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
 
 # Validação
 
