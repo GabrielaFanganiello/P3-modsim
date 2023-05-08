@@ -42,6 +42,11 @@ def modelo(c0, tempo):
     vx = c0[2]
     vy = c0[3]
 
+    l = (x**2 + y**2)**0.5
+    Fel = k*(l-l0)
+    seno = x/l
+    cos = y/l
+
     dxdt = vx
     dydt = vy
     dvxdt = 1/m*(-(Fel*seno)-0.5*p*A*Cd*vx*(vx**2+vy**2)**0.5)
