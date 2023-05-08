@@ -53,9 +53,9 @@ def modelo(c0, tempo):
     dvydt = 1/m*((Fel*cos)-0.5*rho*A*Cd*vx*(vx**2+vy**2)**0.5)-m.g
     
 
-    dXdt = [dxdt, dydt, dvxdt, dvydt]
+    dc0dt = [dxdt, dydt, dvxdt, dvydt]
 
-    return dXdt
+    return dc0dt
 
 # Resolvendo as equações diferenciais por ODEINT
 
