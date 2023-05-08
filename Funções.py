@@ -3,14 +3,19 @@
 
 # Importando bibliotecas necessárias
 
-from math import *
-
+from math import pi
 import numpy as np
 
 # Dados experimentais
 
 
 # Simplificações feitas / abstração
+
+    # Objeto considerado um ponto material
+    # Considera resistência do ar
+
+    # Objetivo: quanto tempo demora para um pendulo de diferentes massas parar?
+
 
 # Condições iniciais, variáveis globais e fórmulas
 
@@ -48,24 +53,22 @@ def modelo(c0, tempo):
     vx = c0[2]
     vy = c0[3]
 
-    l = (x**2 + y**2)**0.5
-    Fel = k*(l-l0)
-    seno = x/l
-    cos = y/l
+    l = ((x**2)+(y**2))**0.5
+    seno_Fel = x/(((x**2)+(v**2))**0.5)         #seno theta (angulo entre força elástica e eixo y)
+    cosseno_Fel = y/(((x**2)+(y**2))**0.5)      #cosseno theta (angulo entre força elástica e eixo y)
+
+    Dx = 1/m(rho*A*Cd*vx*((vx**2)+(vy**2)**0.5))
+    Dy = 1/m(rho*A*Cd*vy*((vx**2)+(vy**2)**0.5))
 
     dxdt = vx
     dydt = vy
-    dvxdt = 1/m*(-(Fel*seno)-0.5*rho*A*Cd*vx*(vx**2+vy**2)**0.5)
-    dvydt = 1/m*((Fel*cos)-0.5*rho*A*Cd*vx*(vx**2+vy**2)**0.5)-m.g
-    
 
-    dc0dt = [dxdt, dydt, dvxdt, dvydt]
+    dvxdt = 1/m(-(Fel*seno_Fel)-Dx)
+    dvydt = 1/m(-(Fel*cosseno_Fel)-Dy-(m*g))
 
-    return dc0dt
+    dXdt = [dxdt, dydt, dvxdt, dvydt]
 
-
-    
-Y0 = [y0b,y0m,v0m,v0b]
+    return dXdt
 
 # Resolvendo as equações diferenciais por ODEINT
 resultado = odeint(modelo,Y0,lista_t)
@@ -84,6 +87,7 @@ plt.show()
 
 
 
+# Plotando os gráficos
 
 # Validação
 
