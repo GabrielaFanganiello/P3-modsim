@@ -3,9 +3,10 @@
 
 # Importando bibliotecas necessárias
 
-from math import pi
-import numpy as np
 from scipy.integrate import odeint
+from math import e
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Dados experimentais
 
@@ -34,9 +35,7 @@ A = pi*(r**2)                       # Área [m2]
 
 Cd =                                # Coeficiente de arrasto []
 
-D = 1/2(rho * Cd * A * v**2)        # Fórmula do arrasto
-
-l0 =                                # Comprimento inicial da mole []
+l0 =                                # Comprimento inicial da mola []
 
 #posicoes iniciais
 x0 =                          
@@ -60,8 +59,9 @@ def modelo(c0, tempo):
     vy = c0[3]
 
     l = ((x**2)+(y**2))**0.5                        # Comprimento da mola
-    seno_Fel = x/(((x**2)+(v**2))**0.5)             # seno theta (ângulo entre força elástica e eixo x)
-    cosseno_Fel = y/(((x**2)+(y**2))**0.5)          # cosseno theta (ângulo entre força elástica e eixo y)
+    Fel = k * (l - l0)
+    seno_theta = x/l            # seno theta (ângulo entre força elástica e eixo x)
+    cosseno_theta = y/l          # cosseno theta (ângulo entre força elástica e eixo y)
 
     Dx = 1/m(rho*A*Cd*vx*((vx**2)+(vy**2)**0.5))    # Fórmula do arrasto decomposta no eixo x
     Dy = 1/m(rho*A*Cd*vy*((vx**2)+(vy**2)**0.5))    # Fórmula do arrasto decomposta no eixo y
@@ -69,42 +69,23 @@ def modelo(c0, tempo):
     dxdt = vx
     dydt = vy
 
-    dvxdt = 1/m(-(Fel*seno_Fel)-Dx)
-    dvydt = 1/m(-(Fel*cosseno_Fel)-Dy-(m*g))
+    dvxdt = 1/m(-(Fel*seno_theta)-Dx)
+    dvydt = 1/m(-(Fel*cosseno_theta)-Dy-(m*g))
 
     dXdt = [dxdt, dydt, dvxdt, dvydt]
     
     return dXdt
     
-Y0 = [y0b,y0m,v0m,v0b]
-resultado = odeint(modelo,Y0,lista_t)
-lista_yb = resultado[:,0]
-lista_ym = resultado[:,1]
-lista_vb = resultado[:,2]
-lista_vm = resultado[:,3]
-
-plt.plot(lista_t,lista_yb)
-plt.plot(lista_t,lista_ym)
-plt.xlabel("Tempo em segundos")
-plt.legend()
-plt.grid(True)
-plt.show()
-
-# Resolvendo as equações diferenciais por ODEINT
-resultado = odeint(modelo,CI,tempo)
+resultado = odeint(modelo, CI, tempo)
 lista_x = resultado[:,0]
 lista_y = resultado[:,1]
 lista_vx = resultado[:,2]
 lista_vy = resultado[:,3]
 
-#Plotando os gráficos
-plt.plot(tempo,lista_x)
-plt.plot(tempo,lista_y)
-plt.xlabel("Tempo em segundos")
-plt.legend()
+plt.plot(lista_x,lista_y)
+plt.xlabel("Deslocamento da mola")
 plt.grid(True)
 plt.show()
-
 
 
 # Plotando os gráficos
