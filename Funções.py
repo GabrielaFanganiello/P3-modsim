@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
     # Objetivo: quanto tempo demora para um pendulo de diferentes massas parar?
 
 
-# Condições iniciais, variáveis globais e fórmulas
+# Definindo variáveis globais 
 
 g = 9.8                             # Aceleração da gravidade [m/s2]
 
@@ -37,7 +37,7 @@ Cd =   0                             # Coeficiente de arrasto []
 
 l0 =   0                             # Comprimento inicial da mola []
 
-#posicoes iniciais
+# Definindo posicoes iniciais
 x0 =   0                       
 y0 = 0
 vx0 = 0
@@ -76,13 +76,14 @@ def modelo(c0, tempo):
     
     return dXdt
     
+
+# Plotando o gráfico de deslocamento 
+
 resultado = odeint(modelo, CI, tempo)
 lista_x = resultado[:,0]
 lista_y = resultado[:,1]
 lista_vx = resultado[:,2]
 lista_vy = resultado[:,3]
-
-# Plotando o gráfico de deslocamento 
 
 plt.plot(lista_x,lista_y)
 plt.xlabel("Deslocamento da mola")
