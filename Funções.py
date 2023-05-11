@@ -59,23 +59,36 @@ def modelo(c0, tempo):
     vx = c0[2]
     vy = c0[3]
 
-    l = ((x**2)+(y**2))**0.5
-    Fel = k * (l - l0)
-    sen_theta = x/l       #seno theta (angulo entre força elástica e eixo y)
-    cos_theta = y/l      #cosseno theta (angulo entre força elástica e eixo y)
+    l = ((x**2)+(y**2))**0.5                        # Comprimento da mola
+    seno_Fel = x/(((x**2)+(v**2))**0.5)             # seno theta (ângulo entre força elástica e eixo x)
+    cosseno_Fel = y/(((x**2)+(y**2))**0.5)          # cosseno theta (ângulo entre força elástica e eixo y)
 
-    Dx = 1/m(rho*A*Cd*vx*((vx**2)+(vy**2)**0.5))
-    Dy = 1/m(rho*A*Cd*vy*((vx**2)+(vy**2)**0.5))
+    Dx = 1/m(rho*A*Cd*vx*((vx**2)+(vy**2)**0.5))    # Fórmula do arrasto decomposta no eixo x
+    Dy = 1/m(rho*A*Cd*vy*((vx**2)+(vy**2)**0.5))    # Fórmula do arrasto decomposta no eixo y
 
     dxdt = vx
     dydt = vy
 
-    dvxdt = 1/m(-(Fel*sen_theta)-Dx)
-    dvydt = 1/m(-(Fel*cos_theta)-Dy-(m*g))
+    dvxdt = 1/m(-(Fel*seno_Fel)-Dx)
+    dvydt = 1/m(-(Fel*cosseno_Fel)-Dy-(m*g))
 
     dXdt = [dxdt, dydt, dvxdt, dvydt]
-
+    
     return dXdt
+    
+Y0 = [y0b,y0m,v0m,v0b]
+resultado = odeint(modelo,Y0,lista_t)
+lista_yb = resultado[:,0]
+lista_ym = resultado[:,1]
+lista_vb = resultado[:,2]
+lista_vm = resultado[:,3]
+
+plt.plot(lista_t,lista_yb)
+plt.plot(lista_t,lista_ym)
+plt.xlabel("Tempo em segundos")
+plt.legend()
+plt.grid(True)
+plt.show()
 
 # Resolvendo as equações diferenciais por ODEINT
 resultado = odeint(modelo,CI,tempo)
