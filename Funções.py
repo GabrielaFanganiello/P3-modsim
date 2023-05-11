@@ -4,7 +4,7 @@
 # Importando bibliotecas necessárias
 
 from scipy.integrate import odeint
-from math import e
+from math import *
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -23,23 +23,23 @@ import matplotlib.pyplot as plt
 
 g = 9.8                             # Aceleração da gravidade [m/s2]
 
-m =                                 # Massa da esfera [kg]
+m = 0                                # Massa da esfera [kg]
 
-r =                                 # Raio da esfera [m]
+r =   0                              # Raio da esfera [m]
 
-k =                                 # Constante elástica da mola [N/m]
+k =   0                              # Constante elástica da mola [N/m]
 
-rho =                               # Densidade do ar [kg/m3]
+rho =   0                            # Densidade do ar [kg/m3]
 
-A = pi*(r**2)                       # Área [m2]
+A = 4 * pi*(r**2)                       # Área da esfera [m2]
 
-Cd =                                # Coeficiente de arrasto []
+Cd =   0                             # Coeficiente de arrasto []
 
-l0 =                                # Comprimento inicial da mola []
+l0 =   0                             # Comprimento inicial da mola []
 
 #posicoes iniciais
-x0 =                          
-y0 =
+x0 =   0                       
+y0 = 0
 vx0 = 0
 vy0 = 0
 
@@ -63,14 +63,14 @@ def modelo(c0, tempo):
     seno_theta = x/l            # seno theta (ângulo entre força elástica e eixo x)
     cosseno_theta = y/l          # cosseno theta (ângulo entre força elástica e eixo y)
 
-    Dx = 1/m(rho*A*Cd*vx*((vx**2)+(vy**2)**0.5))    # Fórmula do arrasto decomposta no eixo x
-    Dy = 1/m(rho*A*Cd*vy*((vx**2)+(vy**2)**0.5))    # Fórmula do arrasto decomposta no eixo y
+    Dx = (1/2) * rho * A * Cd * vx * ((vx**2)+(vy**2)**0.5)    # Fórmula do arrasto decomposta no eixo x
+    Dy = (1/2) * rho * A * Cd * vy * ((vx**2)+(vy**2)**0.5)    # Fórmula do arrasto decomposta no eixo y
 
     dxdt = vx
     dydt = vy
 
-    dvxdt = 1/m(-(Fel*seno_theta)-Dx)
-    dvydt = 1/m(-(Fel*cosseno_theta)-Dy-(m*g))
+    dvxdt = 1/m(-Fel*seno_theta - Dx)
+    dvydt = 1/m(Fel*cosseno_theta - Dy - m*g)
 
     dXdt = [dxdt, dydt, dvxdt, dvydt]
     
