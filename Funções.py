@@ -82,13 +82,12 @@ lista_y = resultado[:,1]
 lista_vx = resultado[:,2]
 lista_vy = resultado[:,3]
 
+# Plotando o gráfico de deslocamento 
+
 plt.plot(lista_x,lista_y)
 plt.xlabel("Deslocamento da mola")
 plt.grid(True)
 plt.show()
-
-
-# Plotando os gráficos
 
 # Validação
 
